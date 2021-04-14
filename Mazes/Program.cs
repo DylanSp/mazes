@@ -19,6 +19,11 @@ namespace Mazes
             MazePrinters.PrintMazeToTerminal(binaryTreeMaze);
             Console.WriteLine();
 
+            Console.WriteLine("Previous maze, solved with Dijkstra's algorithm");
+            var distances = MazeSolvers.SolveWithDijkstra(binaryTreeMaze.Cells[0, 0]);
+            MazePrinters.PrintMazeToTerminal(binaryTreeMaze, cell => distances[cell]);
+            Console.WriteLine();
+
             Console.WriteLine("Press Enter to exit.");
             Console.ReadLine();
         }

@@ -17,6 +17,9 @@ namespace Mazes
         public Cell? East { get; set; }
         public Cell? West { get; set; }
 
+        /// <summary>
+        /// All neighboring cells, whether connected or not.
+        /// </summary>
         public IReadOnlyList<Cell> Neighbors
         {
             get
@@ -32,7 +35,9 @@ namespace Mazes
             }
         }
 
-        // which neighboring cells are connected
+        /// <summary>
+        /// Connected neighboring cells.
+        /// </summary>
         public HashSet<Cell> Links { get; } = new();
 
         public Cell(int row, int column)

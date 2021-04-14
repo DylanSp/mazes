@@ -8,15 +8,13 @@ namespace Mazes
 {
     public static class MazePrinters
     {
-        public static void PrintMazeToTerminal(Grid maze)
+        public static void PrintMazeToTerminal(Grid maze, Func<Cell, int>? getCellDistance = null)
         {
             var corner = "+";
             var horizontalWall = "---";
             var verticalWall = "|";
             var horizontalOpening = "   ";
             var verticalOpening = " ";
-
-            var cellContents = "   ";
 
             var output = new StringBuilder();
 
@@ -36,6 +34,17 @@ namespace Mazes
                 {
                     var cell = maze.Cells[row, column];
 
+                    string cellContents;
+                    if (getCellDistance != null)
+                    {
+                        var distance = getCellDistance(cell);
+                        cellContents = $" {ConvertToBase36Char(distance)} ";
+                    }
+                    else
+                    {
+                        cellContents = "   ";
+                    }
+
                     middleLine.Append(cellContents);
                     middleLine.Append(cell.IsLinked(cell.East) ? verticalOpening : verticalWall);
 
@@ -48,6 +57,18 @@ namespace Mazes
             }
 
             Console.WriteLine(output.ToString());
+        }
+
+        private static char ConvertToBase36Char(int num)
+        {
+            var base36Chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+            if (num < 0 || num > base36Chars.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(num));
+            }
+
+            return base36Chars[num];
         }
     }
 }
