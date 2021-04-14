@@ -59,8 +59,13 @@ namespace Mazes
             }
         }
 
-        public bool IsLinked(Cell otherCell)
+        public bool IsLinked(Cell? otherCell)
         {
+            if (otherCell == null)
+            {
+                return false;
+            }
+
             return Links.Contains(otherCell);
         }
 
