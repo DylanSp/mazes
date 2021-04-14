@@ -1,8 +1,6 @@
-﻿using Crayon;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Linq;
-using static Crayon.Output;
 
 namespace Mazes
 {
