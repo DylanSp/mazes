@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Crayon;
+using System;
+using System.Drawing;
+using System.Linq;
+using static Crayon.Output;
 
 namespace Mazes
 {
@@ -24,8 +28,18 @@ namespace Mazes
             MazePrinters.PrintMazeToTerminal(binaryTreeMaze, cell => distances[cell]);
             Console.WriteLine();
 
+            Console.WriteLine("Previous maze, colored and labeled");
+            MazePrinters.PrintMazeToTerminal(binaryTreeMaze, cell => distances[cell], distance => ConvertDistanceToColor(distance, distances.Values.Max()));
+
             Console.WriteLine("Press Enter to exit.");
             Console.ReadLine();
+        }
+
+        private static Color ConvertDistanceToColor(int distance, int maxDistance)
+        {
+            var proportion = 1 - (((double) distance) / maxDistance);
+            var intensity = Convert.ToByte(Math.Floor(proportion * 255));
+            return Color.FromArgb(intensity, intensity, intensity);
         }
     }
 }

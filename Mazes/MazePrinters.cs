@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using static Crayon.Output;
 
 namespace Mazes
 {
     public static class MazePrinters
     {
-        public static void PrintMazeToTerminal(Grid maze, Func<Cell, int>? getCellDistance = null)
+        private static readonly string Base36Chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+        public static void PrintMazeToTerminal(Grid maze, Func<Cell, int>? getCellDistance = null, Func<int, Color>? colorCell = null)
         {
             var corner = "+";
             var horizontalWall = "---";
@@ -38,7 +40,16 @@ namespace Mazes
                     if (getCellDistance != null)
                     {
                         var distance = getCellDistance(cell);
-                        cellContents = $" {ConvertToBase36Char(distance)} ";
+
+                        if (colorCell != null)
+                        {
+                            var color = colorCell(distance);
+                            cellContents = $" {Rgb(color.R, color.G, color.B).Text("\u2588")} ";    // U+2558 = full block
+                        }
+                        else
+                        {
+                            cellContents = $" {ConvertToBase36Char(distance)} ";
+                        }
                     }
                     else
                     {
@@ -61,14 +72,12 @@ namespace Mazes
 
         private static char ConvertToBase36Char(int num)
         {
-            var base36Chars = "0123456789abcdefghijklmnopqrstuvwxyz";
-
-            if (num < 0 || num > base36Chars.Length)
+            if (num < 0 || num > Base36Chars.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(num));
             }
 
-            return base36Chars[num];
+            return Base36Chars[num];
         }
     }
 }
