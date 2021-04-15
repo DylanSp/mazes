@@ -44,7 +44,8 @@ namespace Mazes
                         if (colorCell != null)
                         {
                             var color = colorCell(distance);
-                            cellContents = $" {Rgb(color.R, color.G, color.B).Text("\u2588")} ";    // U+2558 = full block
+                            var colorBlock = Rgb(color.R, color.G, color.B).Text("\u2588"); // U+2558 = full block
+                            cellContents = string.Concat(Enumerable.Repeat(colorBlock, 3));    
                         }
                         else
                         {
