@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Mazes
 {
+    /// <summary>
+    /// Represents a single cell in some <see cref="Grid"/>. Make sure that no Cell is added to multiple Grids.
+    /// </summary>
     public class Cell
     {
         public int Row { get; }
