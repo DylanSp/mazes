@@ -19,8 +19,19 @@ namespace Mazes
             Console.WriteLine();
 
             Console.WriteLine("Previous maze, colored based on Dijkstra's algorithm");
-            var distances = MazeSolvers.SolveWithDijkstra(binaryTreeMaze.Cells[rowRadius, columnRadius]);   // start in center cell
-            MazePrinters.PrintMazeToTerminal(binaryTreeMaze, cell => distances[cell], distance => ConvertDistanceToColor(distance, distances.Values.Max()));
+            var binaryTreeDistances = MazeSolvers.SolveWithDijkstra(binaryTreeMaze.Cells[rowRadius, columnRadius]);   // start in center cell
+            MazePrinters.PrintMazeToTerminal(binaryTreeMaze, cell => binaryTreeDistances[cell], distance => ConvertDistanceToColor(distance, binaryTreeDistances.Values.Max()));
+
+            Console.WriteLine("Maze generated with sidewinder algorithm:");
+            var sidewinderMaze = MazeGenerators.SidewinderMaze(numRows, numColumns);
+            MazePrinters.PrintMazeToTerminal(sidewinderMaze);
+            Console.WriteLine();
+
+            Console.WriteLine("Previous maze, colored based on Dijkstra's algorithm");
+            var sidewinderDistances = MazeSolvers.SolveWithDijkstra(sidewinderMaze.Cells[rowRadius, columnRadius]);   // start in center cell
+            MazePrinters.PrintMazeToTerminal(sidewinderMaze, cell => sidewinderDistances[cell], distance => ConvertDistanceToColor(distance, sidewinderDistances.Values.Max()));
+
+
 
             Console.WriteLine("Press Enter to exit.");
             Console.ReadLine();
